@@ -12,12 +12,12 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button btnSanbox;
     [SerializeField] private Button btnChallenge;
     [SerializeField] private Button btnResume;
-    [SerializeField] private Button btnExit;
+    //[SerializeField] private Button btnExit;
     [SerializeField] private Button btnSetting;
     [SerializeField] private bool isSetting;
     [SerializeField] private Image SettingIMG;
     [SerializeField] private Image backGround;
-    [SerializeField] private TextMeshProUGUI txtMusic;
+    [SerializeField] private TextMeshProUGUI txtSound;
     private string turnOn = "On";
     private string turnOff = "Off";
     [SerializeField] private bool sound;
@@ -27,30 +27,30 @@ public class MainMenu : MonoBehaviour
 
     void Awake()
     {
-        this.btnPlay = GameObject.Find("BntPlay").GetComponent<Button>();
-        this.btnSanbox = GameObject.Find("BntSanbox").GetComponent<Button>();
-        this.btnChallenge = GameObject.Find("BntChallenge").GetComponent<Button>();
-        this.btnExit = GameObject.Find("BntExit").GetComponent<Button>();
-        this.btnSetting = GameObject.Find("BntSetting").GetComponent<Button>();
-        this.SettingIMG = GameObject.Find("Setting").GetComponent<Image>();
-        this.backGround = GameObject.Find("Background").GetComponent<Image>();
-        this.txtMusic = GameObject.Find("txtMusic").GetComponent<TextMeshProUGUI>();
-        this.BntAds = GameObject.Find("BntAds").GetComponent<Button>();
-        this.homeScreenUI = GameObject.Find("HomeScreenUI");
-        this.sliderSound = GameObject.Find("SliderSound").GetComponent<Slider>();
+        btnPlay = GameObject.Find("BntPlay").GetComponent<Button>();
+        btnSanbox = GameObject.Find("BntSanbox").GetComponent<Button>();
+        btnChallenge = GameObject.Find("BntChallenge").GetComponent<Button>();
+        //this.btnExit = GameObject.Find("BntExit").GetComponent<Button>();
+        btnSetting = GameObject.Find("BntSetting").GetComponent<Button>();
+        SettingIMG = GameObject.Find("Setting").GetComponent<Image>();
+        backGround = GameObject.Find("Background").GetComponent<Image>();
+        txtSound = GameObject.Find("txtOn/Off").GetComponent<TextMeshProUGUI>();
+        BntAds = GameObject.Find("BntAds").GetComponent<Button>();
+        homeScreenUI = GameObject.Find("HomeScreenUI");
+        sliderSound = GameObject.Find("SliderSound").GetComponent<Slider>();
     }
     void Start()
     {
-        this.isSetting = true;
-        this.SettingIMG.gameObject.SetActive(false);
-        this.SettingIMG.transform.localScale = Vector2.zero;
-        this.backGround.gameObject.SetActive(false);
-        this.sound = true;
+        isSetting = true;
+        SettingIMG.gameObject.SetActive(false);
+        SettingIMG.transform.localScale = Vector2.zero;
+        backGround.gameObject.SetActive(false);
+        sound = true;
         if (sound)
         {
-            this.txtMusic.text = "Music " + " / " + turnOn;
+            txtSound.text =turnOn;
             sound = false;
-            this.sliderSound.value = 0.5f;
+            sliderSound.value = 0.5f;
         }
     }
 
@@ -58,8 +58,8 @@ public class MainMenu : MonoBehaviour
     public void PlayClick()
     {
         Debug.Log(btnPlay.name + " was clicked");
-        this.BntAds.gameObject.SetActive(false);
-        this.homeScreenUI.gameObject.SetActive(false);
+        BntAds.gameObject.SetActive(false);
+        homeScreenUI.gameObject.SetActive(false);
 
     }
 
@@ -79,9 +79,9 @@ public class MainMenu : MonoBehaviour
     public void Resume()
     {
         Time.timeScale = 1;
-        this.backGround.gameObject.SetActive(false);
+        backGround.gameObject.SetActive(false);
 
-        this.SettingIMG.transform.LeanScale(Vector2.zero, 1f).setEaseInBack();
+        SettingIMG.transform.LeanScale(Vector2.zero, 1f).setEaseInBack();
         StartCoroutine(TurnOffIMG());
         //this.SettingIMG.transform.localScale = Vector2.zero;
     }
@@ -89,17 +89,17 @@ public class MainMenu : MonoBehaviour
     //Click on Exit
     public void Exit()
     {
-        Debug.Log(btnExit.name + " was clicked");
+        //Debug.Log(btnExit.name + " was clicked");
         Application.Quit();
     }
 
     //Check click on setting
     public void Setting()
     {
-        this.btnSetting.gameObject.SetActive(false);
-        this.backGround.gameObject.SetActive(true);
-        this.SettingIMG.gameObject.SetActive(true);
-        this.SettingIMG.transform.LeanScale(Vector2.one, 0.8f);
+        btnSetting.gameObject.SetActive(false);
+        backGround.gameObject.SetActive(true);
+        SettingIMG.gameObject.SetActive(true);
+        SettingIMG.transform.LeanScale(Vector2.one, 0.8f);
         StartCoroutine(Checkresume());
     }
 
@@ -108,14 +108,14 @@ public class MainMenu : MonoBehaviour
     {
         if (sound)
         {
-            this.txtMusic.text = "Music " + " / " + turnOn;
-            this.sliderSound.value = 0.5f;
+            txtSound.text = turnOn;
+            sliderSound.value = 0.5f;
         }
 
         else
         {
-            this.txtMusic.text = "Music " + " / " + turnOff;
-            this.sliderSound.value = 0;
+            txtSound.text = turnOff;
+            sliderSound.value = 0;
         }
 
         sound = !sound;
@@ -130,25 +130,25 @@ public class MainMenu : MonoBehaviour
     IEnumerator TurnOffIMG()
     {
         yield return new WaitForSeconds(1);
-        this.SettingIMG.gameObject.SetActive(false);
-        this.btnSetting.gameObject.SetActive(true);
+        SettingIMG.gameObject.SetActive(false);
+        btnSetting.gameObject.SetActive(true);
     }
 
     IEnumerator HomeScreen()
     {
         yield return new WaitForSeconds(1);
-        this.SettingIMG.gameObject.SetActive(false);
-        this.btnSetting.gameObject.SetActive(true);
-        this.BntAds.gameObject.SetActive(true);
-        this.homeScreenUI.gameObject.SetActive(true);
+        SettingIMG.gameObject.SetActive(false);
+        btnSetting.gameObject.SetActive(true);
+        BntAds.gameObject.SetActive(true);
+        homeScreenUI.gameObject.SetActive(true);
     }
 
     //Click on Main Menu
     public void ClickMainMenu()
     {
         Time.timeScale = 1;
-        this.backGround.gameObject.SetActive(false);
-        this.SettingIMG.transform.LeanScale(Vector2.zero, 1f).setEaseInBack();
+        backGround.gameObject.SetActive(false);
+        SettingIMG.transform.LeanScale(Vector2.zero, 1f).setEaseInBack();
         StartCoroutine(HomeScreen());
     }
 
